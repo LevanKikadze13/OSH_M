@@ -23,45 +23,39 @@ const ProfileDetails = () => {
   };
 
   return (
-    <Container className="my-4 d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
-      <Row>
-        <Col>
-          <Card className="shadow-lg">
+    <Container className=" my-5 ">
+      <Row className="justify-content-center ">
+        <Col className='' xs={12} md={10} lg={8}>
+          <Card className="shadow">
             <Card.Body>
-              <Card.Title as="h2" className="mb-4 text-center">
-                Profile Details
+              <Card.Title as="h2" className="mb-3 pb-5 border-bottom text-center w-100">
+                პროფილის დეტალები
               </Card.Title>
-              <Row className="mb-3">
-                <Col sm={4}>
-                  <strong>Name:</strong>
+              <Row className="mb-4 pb-3 border-bottom" w-100>
+                <Col >
+                  <strong>სახელი-გვარი: &nbsp;&nbsp;&nbsp;&nbsp; {name}</strong>
                 </Col>
-                <Col sm={8}>{name}</Col>
+
               </Row>
-              <Row className="mb-3">
-                <Col sm={4}>
-                  <strong>Email:</strong>
+              <Row className="mb-4 pb-3 border-bottom  w-100">
+                <Col >
+                  <strong>ელ-ფოსტა: &nbsp;&nbsp;&nbsp;&nbsp; {email}</strong>
                 </Col>
-                <Col sm={8}>{email}</Col>
+
               </Row>
-              <Row className="mb-3">
-                <Col sm={4}>
-                  <strong>Password:</strong>
-                </Col>
-                <Col sm={8}>
-                  ********{' '}
-                  <Button variant="link" onClick={() => setShowPasswordModal(true)}>
-                    Change Password
+              <Row className="mb-4 pb-3 border-bottom align-items-center  w-100">
+                <Col className='d-flex align-items-center justify-content-beween'>
+                  <strong>პაროლი: &nbsp;&nbsp;&nbsp;&nbsp;  *******  &nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                  <Button className='btn btn-primary' onClick={() => setShowPasswordModal(true)}>
+                    პაროლის შეცვლა
                   </Button>
                 </Col>
               </Row>
-              <Row>
-                <Col sm={4}>
-                  <strong>Phone Number:</strong>
-                </Col>
-                <Col sm={8}>
-                  {phone}{' '}
-                  <Button variant="link" onClick={() => setShowPhoneModal(true)}>
-                    Change Phone Number
+              <Row className="mb-4 pb-3 border-bottom align-items-center w-100">
+                <Col className='d-flex align-items-center justify-content-beween'>
+                  <strong>ტელეფონის ნომერი: &nbsp;&nbsp;&nbsp;&nbsp;  {phone}  &nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                  <Button className='btn btn-primary' onClick={() => setShowPhoneModal(true)}>
+                    ნომრის შეცვლა
                   </Button>
                 </Col>
               </Row>
@@ -105,17 +99,22 @@ const ProfileDetails = () => {
             <Form.Label>New Phone Number</Form.Label>
             <Form.Control
               type="tel"
+              pattern="[0-9]{9}"
               value={newPhone}
               onChange={(e) => setNewPhone(e.target.value)}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              შეიყვანეთ ვალიდური 9 ნიშნა ნომერი
+            </Form.Control.Feedback>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowPhoneModal(false)}>
-            Cancel
+            გაუქმება
           </Button>
-          <Button variant="primary" onClick={handlePhoneChange}>
-            Save Changes
+          <Button variant="primary" onClick={handlePhoneChange} disabled={!/^[0-9]{9}$/.test(newPhone)}>
+            შენახვა
           </Button>
         </Modal.Footer>
       </Modal>

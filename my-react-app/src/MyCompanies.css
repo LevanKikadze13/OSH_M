@@ -31,7 +31,6 @@
   overflow-x: hidden;
 }
 
-
 .pagination-container {
   margin-top: 20px;
   display: flex;
@@ -65,6 +64,10 @@
 
 .add-new-card {
   background-color: #bbffe8;
+}
+.add-new-card:hover{
+  background-color: #19ffb2;
+  transition: 0.5s;
 }
 
 
