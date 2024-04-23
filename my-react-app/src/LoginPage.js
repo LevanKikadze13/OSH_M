@@ -27,7 +27,7 @@ function Login() {
         const data = await response.json();
         console.log('Login Success:', data);
         localStorage.setItem('token', data.token);
-        navigate('/profile');
+        navigate('/my-organizations');
       } else {
         const errorData = await response.json();
         console.log('Login Failed:', errorData);

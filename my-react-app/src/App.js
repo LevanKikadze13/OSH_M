@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './LoginPage';
 import Register from './RegisterPage';
 import Profile from './ProfilePage';
+import MyProfile from './MyProfile';
 import HomePage from './HomePage'
 import Sidebar from './Sidebar'
 import MyCompanies from './MyCompanies';
@@ -52,14 +53,22 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
           <Route
-            path="/profile"
+            exact path="/my-organizations"
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact path='/MyProfile'
+            element={
+              <ProtectedRoute>
+                <MyProfile />
               </ProtectedRoute>
             }
           />
@@ -68,5 +77,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

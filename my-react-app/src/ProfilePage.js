@@ -29,29 +29,30 @@ function Profile() {
     fetch('http://localhost:5000/profile', {
       headers: { 'Authorization': `Bearer ${token}` },
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    }).catch(error=>{console.error('AAAAAAA', error)})
-    .then(data => {
-      console.log('Profile data:', data);
-      setUserDetails({ name: data.name, lastName: data.last_name });
-    })
-    .catch(error => {
-      console.error('There has been a problem with your fetch operation:', error)});
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).catch(error => { console.error('AAAAAAA', error) })
+      .then(data => {
+        console.log('Profile data:', data);
+        setUserDetails({ name: data.name, lastName: data.last_name });
+      })
+      .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error)
+      });
   }, []);
 
   return (
     <div style={{
-     height:"100vh", 
-     display:"flex", 
-     flexDirection:'column',
-  }
-    
-     }>
-      <ProfileHeader fname={userDetails.name} lname={userDetails.lastName}/>
+      height: "100vh",
+      display: "flex",
+      flexDirection: 'column',
+    }
+
+    }>
+      <ProfileHeader fname={userDetails.name} lname={userDetails.lastName} />
       <MyCompanies data={data} />
     </div>
   );
