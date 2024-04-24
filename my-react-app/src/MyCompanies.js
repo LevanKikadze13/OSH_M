@@ -34,6 +34,13 @@ const MyCompanies = ({ data }) => {
     }
   };
 
+  const handleOrganizationSubmit = () => {
+    // Handle the submission of the new organization
+    console.log('New Organization:', newOrganization);
+    setNewOrganization({ name: '', description: '' });
+    setShowOrganizationModal(false);
+  };
+
   const renderPagination = () => {
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {
@@ -65,7 +72,7 @@ const MyCompanies = ({ data }) => {
             isOpen={openDropdownIndex === index}
           />
 
-          <Card className="my-companies-card" onClick={() => setShowOrganizationModal(true)}>
+          <Card className="my-companies-card">
             <Card.Body>
               <Card.Title className="border-bottom pb-3">{item.title}</Card.Title>
               <Card.Text>{item.description}</Card.Text>
@@ -77,8 +84,8 @@ const MyCompanies = ({ data }) => {
 
     if (currentPage === 1) {
       cards.unshift(
-        <Col lg={4} xs={5} className="mb-4" key="add-new" onClick={() => setShowOrganizationModal(true)}>
-          <div className="card-link">
+        <Col lg={4} xs={5} className="mb-4" key="add-new">
+          <div className="card-link" onClick={() => setShowOrganizationModal(true)}>
             <Card className="my-companies-card add-new-card">
               <Card.Body>
                 <Card.Title className="border-bottom pb-3">ახალი ორგანიზაცია</Card.Title>
@@ -131,7 +138,47 @@ const MyCompanies = ({ data }) => {
             </div>
           </div>
         </Row>
+        <Modal show={showOrganizationModal} onHide={() => setShowOrganizationModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Organization</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="organizationName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={newOrganization.name}
+                onChange={(e) =>
+                  setNewOrganization({ ...newOrganization, name: e.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="organizationDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={newOrganization.description}
+                onChange={(e) =>
+                  setNewOrganization({ ...newOrganization, description: e.target.value })
+                }
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowOrganizationModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleOrganizationSubmit}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </Container>
+
+      
     </div>
   );
 };
