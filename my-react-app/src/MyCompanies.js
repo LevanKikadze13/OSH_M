@@ -12,6 +12,7 @@ const MyCompanies = ({ data }) => {
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const [showOrganizationModal, setShowOrganizationModal] = useState(false);
   const [newOrganization, setNewOrganization] = useState({ name: '', description: '' });
+  const [selectedOrganization, setSelectedOrganization] = useState(null);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -35,9 +36,15 @@ const MyCompanies = ({ data }) => {
   };
 
   const handleOrganizationSubmit = () => {
-    // Handle the submission of the new organization
-    console.log('New Organization:', newOrganization);
-    setNewOrganization({ name: '', description: '' });
+    if (selectedOrganization) {
+      // Handle the update of the selected organization
+      console.log('Updated Organization:', selectedOrganization);
+      setSelectedOrganization(null);
+    } else {
+      // Handle the submission of the new organization
+      console.log('New Organization:', newOrganization);
+      setNewOrganization({ name: '', description: '' });
+    }
     setShowOrganizationModal(false);
   };
 
@@ -61,7 +68,7 @@ const MyCompanies = ({ data }) => {
 
   const renderCards = () => {
     const cards = currentData.map((item, index) => (
-      <Col lg={4} xs={5} className="mb-4" key={index}>
+      <Col lg={4} xs={12} className="mb-4" key={index}>
         <Link
           to={`/organization/${index}`}
           className="card-link"
@@ -70,6 +77,7 @@ const MyCompanies = ({ data }) => {
           <BurgerMenu
             handleBurgerMenuClick={(event) => handleBurgerMenuClick(event, index)}
             isOpen={openDropdownIndex === index}
+            item={item}
           />
 
           <Card className="my-companies-card">
@@ -84,7 +92,7 @@ const MyCompanies = ({ data }) => {
 
     if (currentPage === 1) {
       cards.unshift(
-        <Col lg={4} xs={5} className="mb-4" key="add-new">
+        <Col lg={4} m={5} xs={12} className="mb-4" key="add-new">
           <div className="card-link" onClick={() => setShowOrganizationModal(true)}>
             <Card className="my-companies-card add-new-card">
               <Card.Body>
@@ -101,7 +109,7 @@ const MyCompanies = ({ data }) => {
     return cards;
   };
 
-  const BurgerMenu = ({ handleBurgerMenuClick, isOpen }) => {
+  const BurgerMenu = ({ handleBurgerMenuClick, isOpen, item }) => {
     return (
       <Dropdown className="burger-menu" show={isOpen} onToggle={() => setOpenDropdownIndex(null)}>
         <Dropdown.Toggle
@@ -111,9 +119,16 @@ const MyCompanies = ({ data }) => {
         >
           <FontAwesomeIcon icon={faEllipsisV} />
         </Dropdown.Toggle>
-        <Dropdown.Menu>
+        <Dropdown.Menu align="end">
           <Dropdown.Item>
-            <Button variant="primary" className="input-block-level form-control">
+            <Button
+              variant="primary"
+              className="input-block-level form-control"
+              onClick={() => {
+                setSelectedOrganization(item);
+                setShowOrganizationModal(true);
+              }}
+            >
               რედაქტირება
             </Button>
           </Dropdown.Item>
@@ -138,47 +153,63 @@ const MyCompanies = ({ data }) => {
             </div>
           </div>
         </Row>
-        <Modal show={showOrganizationModal} onHide={() => setShowOrganizationModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Organization</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="organizationName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={newOrganization.name}
-                onChange={(e) =>
-                  setNewOrganization({ ...newOrganization, name: e.target.value })
-                }
-              />
-            </Form.Group>
-            <Form.Group controlId="organizationDescription">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={newOrganization.description}
-                onChange={(e) =>
-                  setNewOrganization({ ...newOrganization, description: e.target.value })
-                }
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowOrganizationModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleOrganizationSubmit}>
-            Submit
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Modal show={showOrganizationModal} onHide={() => {
+          setSelectedOrganization(null);
+          setShowOrganizationModal(false);
+        }}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {selectedOrganization ? 'რედაქტირება' : 'ახალი ორგანიზაციის დამატება'}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group controlId="organizationName">
+                <Form.Label>დასახელება:</Form.Label>
+                <Form.Control
+                  placeholder="მაგ: ავერსი"
+                  type="text"
+                  value={selectedOrganization ? selectedOrganization.name : newOrganization.name}
+                  onChange={(e) => {
+                    if (selectedOrganization) {
+                      setSelectedOrganization({ ...selectedOrganization, name: e.target.value });
+                    } else {
+                      setNewOrganization({ ...newOrganization, name: e.target.value });
+                    }
+                  }}
+                />
+              </Form.Group>
+              <Form.Group controlId="organizationDescription">
+                <Form.Label>აღწერა:</Form.Label>
+                <Form.Control
+                  placeholder="მაგ: მისამართი/მოკლე აღწერა"
+                  as="textarea"
+                  rows={3}
+                  value={selectedOrganization ? selectedOrganization.description : newOrganization.description}
+                  onChange={(e) => {
+                    if (selectedOrganization) {
+                      setSelectedOrganization({ ...selectedOrganization, description: e.target.value });
+                    } else {
+                      setNewOrganization({ ...newOrganization, description: e.target.value });
+                    }
+                  }}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => {
+              setSelectedOrganization(null);
+              setShowOrganizationModal(false);
+            }}>
+              გაუქმება
+            </Button>
+            <Button variant="primary" onClick={handleOrganizationSubmit}>
+              შენახვა
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
-
-      
     </div>
   );
 };
