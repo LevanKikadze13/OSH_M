@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container, Row, Col, Button, Modal, Form, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +10,9 @@ const itemsPerPage = 11;
 
 const MyCompanies = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // State to track which dropdown is open
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+  const [showOrganizationModal, setShowOrganizationModal] = useState(false)
+  const [newOrganization, setNewOrganization] = useState({name: '', description: ''})
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -63,7 +66,7 @@ const MyCompanies = ({ data }) => {
             isOpen={openDropdownIndex === index}
           />
 
-          <div className="card my-companies-card">
+          <div className="card my-companies-card" onClick={() => setShowOrganizationModal(true)}>
             <div className="card-body">
               <h5 className="card-title border-bottom pb-3">{item.title}</h5>
               <p className="card-text">{item.description}</p>
@@ -77,7 +80,7 @@ const MyCompanies = ({ data }) => {
     if (currentPage === 1) {
       cards.unshift(
         <div key="add-new" className="col-lg-4 col-5 mb-4">
-          <Link to="/add-organization" className="card-link">
+          <div className="card-link">
             <div className="card my-companies-card add-new-card">
               <div className="card-body">
                 <h5 className="card-title border-bottom pb-3">ახალი ორგანიზაცია</h5>
@@ -86,7 +89,7 @@ const MyCompanies = ({ data }) => {
                 </p>
               </div>
             </div>
-          </Link>
+          </div>
         </div>
       );
     }
@@ -112,17 +115,51 @@ const MyCompanies = ({ data }) => {
   };
 
   return (
-    <div className="container-fluid mt-3">
-      <div className="row justify-content-center main-card-container">
-        <div className="card-container">
-          <div className="card-content">
-            <div className="row text-center">{renderCards()}</div>
-            <div className="pagination-container">{renderPagination()}</div>
+    <div>
+      <div className="container-fluid mt-3">
+        <div className="row justify-content-center main-card-container">
+          <div className="card-container">
+            <div className="card-content">
+              <div className="row text-center">{renderCards()}</div>
+              <div className="pagination-container">{renderPagination()}</div>
+            </div>
           </div>
         </div>
       </div>
+      <Modal show={showOrganizationModal} onHide={() => setShowOrganizationModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>პაროლის შეცვლა</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="formNewOrganization">
+            <Form.Label>ორგანიზაციის სახელი</Form.Label>
+            <Form.Control
+              type="name"
+              value={newOrganization}
+              onChange={(e) => setNewOrganization(e.target.value.name)}
+            />
+            <Form.Label>ორგანიზაციის დახასიათება. (მაგ: მისამართი)</Form.Label>
+            <Form.Control
+              type="name"
+              value={newOrganization}
+              onChange={(e) => setNewOrganization(e.target.value.name)}
+            />
+            
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowOrganizationModal(false)}>
+            გაუქმება
+          </Button>
+          <Button variant="primary">
+            შენახვა
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
+
+
 
 export default MyCompanies;

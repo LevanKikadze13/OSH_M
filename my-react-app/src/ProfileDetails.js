@@ -67,11 +67,11 @@ const ProfileDetails = () => {
       {/* Change Password Modal */}
       <Modal show={showPasswordModal} onHide={() => setShowPasswordModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Change Password</Modal.Title>
+          <Modal.Title>პაროლის შეცვლა</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group controlId="formNewPassword">
-            <Form.Label>New Password</Form.Label>
+            <Form.Label>ახალი პაროლი</Form.Label>
             <Form.Control
               type="password"
               value={newPassword}
@@ -81,22 +81,22 @@ const ProfileDetails = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowPasswordModal(false)}>
-            Cancel
+            გაუქმება
           </Button>
           <Button variant="primary" onClick={handlePasswordChange}>
-            Save Changes
+            შენახვა
           </Button>
         </Modal.Footer>
       </Modal>
 
-      {/* Change Phone Number Modal */}
+
       <Modal show={showPhoneModal} onHide={() => setShowPhoneModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Change Phone Number</Modal.Title>
+          <Modal.Title>ნომრის შეცვლა</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group controlId="formNewPhone">
-            <Form.Label>New Phone Number</Form.Label>
+            <Form.Label>ახალი ტელეფონის ნომერი</Form.Label>
             <Form.Control
               type="tel"
               pattern="[0-9]{9}"
