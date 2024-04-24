@@ -90,7 +90,10 @@ const ProfileDetails = () => {
       </Modal>
 
 
-      <Modal show={showPhoneModal} onHide={() => setShowPhoneModal(false)}>
+      <Modal show={showPhoneModal}
+        onHide={() => setShowPhoneModal(false)
+        }
+      >
         <Modal.Header closeButton>
           <Modal.Title>ნომრის შეცვლა</Modal.Title>
         </Modal.Header>

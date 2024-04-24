@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Modal, Form, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal, Form, Card, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import { Dropdown } from 'react-bootstrap';
 import './MyCompanies.css';
 
 const itemsPerPage = 11;
@@ -11,8 +10,8 @@ const itemsPerPage = 11;
 const MyCompanies = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
-  const [showOrganizationModal, setShowOrganizationModal] = useState(false)
-  const [newOrganization, setNewOrganization] = useState({name: '', description: ''})
+  const [showOrganizationModal, setShowOrganizationModal] = useState(false);
+  const [newOrganization, setNewOrganization] = useState({ name: '', description: '' });
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -24,14 +23,14 @@ const MyCompanies = ({ data }) => {
   };
 
   const handleBurgerMenuClick = (event, index) => {
-    event.stopPropagation(); // Stop the event from propagating to the card link
-    event.preventDefault()
-    setOpenDropdownIndex(index === openDropdownIndex ? null : index); // Toggle dropdown
+    event.stopPropagation();
+    event.preventDefault();
+    setOpenDropdownIndex(index === openDropdownIndex ? null : index);
   };
 
   const handleLinkClick = (event, index) => {
     if (openDropdownIndex !== null) {
-      setOpenDropdownIndex(null); // Close dropdown if any dropdown is open
+      setOpenDropdownIndex(null);
     }
   };
 
@@ -40,9 +39,9 @@ const MyCompanies = ({ data }) => {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(
         <li key={i} className={`page-item ${currentPage === i ? 'active' : ''}`}>
-          <button className="page-link" onClick={() => handlePageChange(i)}>
+          <Button variant="link" className="page-link" onClick={() => handlePageChange(i)}>
             {i}
-          </button>
+          </Button>
         </li>
       );
     }
@@ -55,7 +54,7 @@ const MyCompanies = ({ data }) => {
 
   const renderCards = () => {
     const cards = currentData.map((item, index) => (
-      <div key={index} className="col-lg-4 col-5 mb-4">
+      <Col lg={4} xs={5} className="mb-4" key={index}>
         <Link
           to={`/organization/${index}`}
           className="card-link"
@@ -66,31 +65,30 @@ const MyCompanies = ({ data }) => {
             isOpen={openDropdownIndex === index}
           />
 
-          <div className="card my-companies-card" onClick={() => setShowOrganizationModal(true)}>
-            <div className="card-body">
-              <h5 className="card-title border-bottom pb-3">{item.title}</h5>
-              <p className="card-text">{item.description}</p>
-            </div>
-
-          </div>
+          <Card className="my-companies-card" onClick={() => setShowOrganizationModal(true)}>
+            <Card.Body>
+              <Card.Title className="border-bottom pb-3">{item.title}</Card.Title>
+              <Card.Text>{item.description}</Card.Text>
+            </Card.Body>
+          </Card>
         </Link>
-      </div>
+      </Col>
     ));
 
     if (currentPage === 1) {
       cards.unshift(
-        <div key="add-new" className="col-lg-4 col-5 mb-4">
+        <Col lg={4} xs={5} className="mb-4" key="add-new" onClick={() => setShowOrganizationModal(true)}>
           <div className="card-link">
-            <div className="card my-companies-card add-new-card">
-              <div className="card-body">
-                <h5 className="card-title border-bottom pb-3">ახალი ორგანიზაცია</h5>
-                <p className="card-text">
+            <Card className="my-companies-card add-new-card">
+              <Card.Body>
+                <Card.Title className="border-bottom pb-3">ახალი ორგანიზაცია</Card.Title>
+                <Card.Text>
                   დამატება <FontAwesomeIcon className="ms-1 add-organization" icon={faPlus} />
-                </p>
-              </div>
-            </div>
+                </Card.Text>
+              </Card.Body>
+            </Card>
           </div>
-        </div>
+        </Col>
       );
     }
     return cards;
@@ -98,7 +96,7 @@ const MyCompanies = ({ data }) => {
 
   const BurgerMenu = ({ handleBurgerMenuClick, isOpen }) => {
     return (
-      <Dropdown className="burger-menu" show={isOpen} onClose={() => setOpenDropdownIndex(null)}>
+      <Dropdown className="burger-menu" show={isOpen} onToggle={() => setOpenDropdownIndex(null)}>
         <Dropdown.Toggle
           variant="link"
           id="burger-menu-dropdown"
@@ -106,9 +104,17 @@ const MyCompanies = ({ data }) => {
         >
           <FontAwesomeIcon icon={faEllipsisV} />
         </Dropdown.Toggle>
-        <Dropdown.Menu className='dropdown-menu'>
-          <Dropdown.Item><button type="button" class="btn btn-primary input-block-level form-control">რედაქტირება</button></Dropdown.Item>
-          <Dropdown.Item><button type="button" class="btn btn-danger input-block-level form-control">წაშლა</button></Dropdown.Item>
+        <Dropdown.Menu>
+          <Dropdown.Item>
+            <Button variant="primary" className="input-block-level form-control">
+              რედაქტირება
+            </Button>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Button variant="danger" className="input-block-level form-control">
+              წაშლა
+            </Button>
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     );
@@ -116,50 +122,18 @@ const MyCompanies = ({ data }) => {
 
   return (
     <div>
-      <div className="container-fluid mt-3">
-        <div className="row justify-content-center main-card-container">
+      <Container fluid className="mt-3">
+        <Row className="justify-content-center main-card-container">
           <div className="card-container">
             <div className="card-content">
-              <div className="row text-center">{renderCards()}</div>
+              <Row className="text-center">{renderCards()}</Row>
               <div className="pagination-container">{renderPagination()}</div>
             </div>
           </div>
-        </div>
-      </div>
-      <Modal show={showOrganizationModal} onHide={() => setShowOrganizationModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>პაროლის შეცვლა</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group controlId="formNewOrganization">
-            <Form.Label>ორგანიზაციის სახელი</Form.Label>
-            <Form.Control
-              type="name"
-              value={newOrganization}
-              onChange={(e) => setNewOrganization(e.target.value.name)}
-            />
-            <Form.Label>ორგანიზაციის დახასიათება. (მაგ: მისამართი)</Form.Label>
-            <Form.Control
-              type="name"
-              value={newOrganization}
-              onChange={(e) => setNewOrganization(e.target.value.name)}
-            />
-            
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowOrganizationModal(false)}>
-            გაუქმება
-          </Button>
-          <Button variant="primary">
-            შენახვა
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </Row>
+      </Container>
     </div>
   );
 };
-
-
 
 export default MyCompanies;
