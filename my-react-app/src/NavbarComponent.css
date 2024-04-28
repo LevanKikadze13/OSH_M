@@ -8,10 +8,11 @@
   .options{
     display: flex;
   }
-  
+
   .logo{
     max-width: 150px;
   }
+
 
   @media (max-width: 980px){
     .menu-items{

@@ -116,7 +116,7 @@
   cursor: default;
 }
 
-.dropdown-menu {
+.card-link .dropdown-menu {
   transform: none !important; 
   position: absolute !important;
   inset: 0px 3vw auto auto !important;
