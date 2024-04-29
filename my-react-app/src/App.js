@@ -7,6 +7,7 @@ import MyProfile from './MyProfile';
 import HomePage from './HomePage'
 import Sidebar from './Sidebar'
 import MyCompanies from './MyCompanies';
+import CompanyFilesPage from './CompanyFilesPage';
 
 const ProtectedRoute = ({ children }) => {
 
@@ -72,6 +73,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            exact path='/CompanyFiles'
+            element={
+              <ProtectedRoute>
+                <CompanyFilesPage />
+              </ProtectedRoute>
+            }
+          />
+      
         </Routes>
       </Router>
     </div>

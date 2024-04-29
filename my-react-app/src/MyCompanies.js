@@ -70,7 +70,7 @@ const MyCompanies = ({ data }) => {
     const cards = currentData.map((item, index) => (
       <Col lg={4} xs={12} className="mb-4" key={index}>
         <Link
-          to={`/organization/${index}`}
+          to={`/CompanyFiles/${index}`}
           className="card-link"
           onClick={(event) => handleLinkClick(event, index)}
         >
