@@ -9,6 +9,7 @@ import Sidebar from './Sidebar'
 import MyCompanies from './MyCompanies';
 import CompanyFilesPage from './CompanyFilesPage';
 import RisksTable from './RisksTable';
+import { NewDocument } from './NewDocument';
 
 const ProtectedRoute = ({ children }) => {
 
@@ -83,10 +84,10 @@ function App() {
             }
           />
           <Route
-            exact path='/RisksTable'
+            exact path='/NewDocument'
             element={
               <ProtectedRoute>
-                <RisksTable />
+                <NewDocument />
               </ProtectedRoute>
             }
           />
