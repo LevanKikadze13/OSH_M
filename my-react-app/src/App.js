@@ -8,6 +8,7 @@ import HomePage from './HomePage'
 import Sidebar from './Sidebar'
 import MyCompanies from './MyCompanies';
 import CompanyFilesPage from './CompanyFilesPage';
+import RisksTable from './RisksTable';
 
 const ProtectedRoute = ({ children }) => {
 
@@ -78,6 +79,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <CompanyFilesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact path='/RisksTable'
+            element={
+              <ProtectedRoute>
+                <RisksTable />
               </ProtectedRoute>
             }
           />
