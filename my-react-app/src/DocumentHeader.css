@@ -1,3 +1,10 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
 .document-header {
     max-width: 600px;
     margin: 0 auto;
@@ -44,11 +51,20 @@
     background-color: #0056b3;
   }
   .suggestion {
+    background-color: rgb(225, 242, 255);
+    border-radius: 5px;
     list-style-type: none;
     padding: 8px 12px;
     cursor: pointer;
+    margin: none;
+  }
+   ul{
+    list-style-type: none;
+    display: inline;
+
   }
   
   .suggestion-highlighted {
-    background-color: #f8f9fa;
+    background-color: lightblue;
+    transition: 0.3s;
   }

@@ -136,7 +136,7 @@ const CompanyFiles = ({ data }) => {
             {currentPage === 1 && (
               <Row className="mb-4">
                 <Col md={6} className="text-center mb-3">
-                  <Link to="/new-file" className="card-link">
+                  <Link to="/NewDocument" className="card-link">
                     <Card className="add-new-card">
                       <Card.Body>
                         <Card.Title>
