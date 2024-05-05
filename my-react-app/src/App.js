@@ -8,7 +8,6 @@ import HomePage from './HomePage'
 import Sidebar from './Sidebar'
 import MyCompanies from './MyCompanies';
 import CompanyFilesPage from './CompanyFilesPage';
-import RisksTable from './RisksTable';
 import { NewDocument } from './NewDocument';
 
 const ProtectedRoute = ({ children }) => {

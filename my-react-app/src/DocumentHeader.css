@@ -35,7 +35,7 @@
     border-radius: 4px;
   }
   
-  .btn-primary {
+  .document-header-buttons .btn-primary {
     display: block;
     width: 100%;
     padding: 10px;

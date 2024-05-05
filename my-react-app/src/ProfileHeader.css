@@ -16,7 +16,12 @@
     background-color: aliceblue;
   }
   
-  
+  .header-content-right{
+    display: flex;
+    
+  }
+
+
   .logo{
     max-width: 150px;
   }

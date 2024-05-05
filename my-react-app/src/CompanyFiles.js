@@ -109,7 +109,12 @@ const CompanyFiles = ({ data }) => {
       <Container fluid className="mt-3">
         <div className="card-container">
           <div className="card-content">
-            <Row className="mb-4 filtration border-bottom pb-4 d-flex justify-content-around">
+            <Row className="mb-4 filtration border-bottom pb-4 d-flex justify-content-around mt-1">
+              <Col md={4} className="d-flex align-items-center justify-content-center">
+                <h5>
+                  ობიექტის სახელი
+                </h5>
+              </Col>
               <Col md={4} className='mb-2'>
                 <Form.Control
                   type="date"
@@ -126,12 +131,6 @@ const CompanyFiles = ({ data }) => {
                   placeholder="End Date"
                 />
               </Col>
-              <Col md={4} className="text-end">
-                <Button variant="primary" onClick={handleFilter}>
-                  <FontAwesomeIcon icon={faFilter} className="me-2" />
-                  გაფილტვრა
-                </Button>
-              </Col>
             </Row>
             {currentPage === 1 && (
               <Row className="mb-4">
@@ -140,7 +139,7 @@ const CompanyFiles = ({ data }) => {
                     <Card className="add-new-card">
                       <Card.Body>
                         <Card.Title>
-                          ახალი ფაილის შექმნა <FontAwesomeIcon className="ms-1 add-organization" icon={faPlus}  />
+                          ახალი ფაილის შექმნა <FontAwesomeIcon className="ms-1 add-organization" icon={faPlus} />
                         </Card.Title>
                       </Card.Body>
                     </Card>
