@@ -63,11 +63,12 @@
 }
 
 .add-new-card {
-  background-color: #bbffe8;
+  /* background-color: #d7feea; */
+  background-color: rgb(208, 255, 224);
 }
 
 .add-new-card:hover {
-  background-color: #19ffb2;
+  background-color: #baebd1;
   transition: 0.5s;
 }
 

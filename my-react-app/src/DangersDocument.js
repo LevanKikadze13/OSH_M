@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './DangersDocument.css';
+import DangersTableOne from './DangersTableOne';
 
 const Dangers = [
   { id: 1, name: 'High Blood Pressure' },
@@ -21,9 +22,10 @@ const Dangers = [
 
 const itemsPerPage = 12;
 
-const DangersDocument = ({ name, fieldOfWork }) => {
+const DangersDocument = ({ name, fieldOfWork, onBack }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedDanger, setSelectedDanger] = useState(null);
 
   const filteredDangers = Dangers.filter((danger) =>
     danger.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -36,6 +38,14 @@ const DangersDocument = ({ name, fieldOfWork }) => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleDangerSelect = (danger) => {
+    setSelectedDanger(danger);
+  };
+
+  const handleBackToDangers = () => {
+    setSelectedDanger(null);
   };
 
   const renderPagination = () => {
@@ -59,39 +69,51 @@ const DangersDocument = ({ name, fieldOfWork }) => {
   return (
     <div className="dangers-document">
       <Container className="dangers-container">
-        <row className='d-flex justify-content-between border-bottom'>
-          <h2 className="text-center mb-4"> აირჩიეთ საფთხე</h2>
-          <div className="search-container  d-flex align-items-center">
-          <div className='me-4'>საფრთხეების გაფილტვრა:</div>
-            <Form.Group controlId="searchTerm w-50">
-              <div className="search-input">
-                <Form.Control
-                  id="filter-dangers"
-                  type="text"
-                  placeholder="მოძებნეთ საფრთხე..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <FontAwesomeIcon icon={faSearch} className="search-icon" />
-              </div>
-            </Form.Group>
-          </div>
-        </row>
-        <Row className="justify-content-center mt-4">
-          {currentDangers.map((danger) => (
-            <Col lg={4} md={6} sm={12} key={danger.id} className="mb-4">
-              <Card className="danger-card">
-                <Card.Body>
-                  <div className="danger-icon">
-                    <FontAwesomeIcon icon={faExclamationTriangle} />
+        {selectedDanger ? (
+          <DangersTableOne
+            danger={selectedDanger}
+            onBack={handleBackToDangers}
+          />
+        ) : (
+          <>
+            <Row className='d-flex justify-content-between border-bottom'>
+              <h2 className="text-center mb-4">აირჩიეთ საფთხე</h2>
+              <div className="search-container d-flex align-items-center">
+                <div className='me-4'>საფრთხეების გაფილტვრა:</div>
+                <Form.Group controlId="searchTerm w-50">
+                  <div className="search-input">
+                    <Form.Control
+                      id="filter-dangers"
+                      type="text"
+                      placeholder="მოძებნეთ საფრთხე..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <FontAwesomeIcon icon={faSearch} className="search-icon" />
                   </div>
-                  <Card.Title>{danger.name}</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-        {renderPagination()}
+                </Form.Group>
+              </div>
+            </Row>
+            <Row className="justify-content-center mt-4">
+              {currentDangers.map((danger) => (
+                <Col lg={4} md={6} sm={12} key={danger.id} className="mb-4">
+                  <Card className="danger-card" onClick={() => handleDangerSelect(danger)}>
+                    <Card.Body>
+                      <div className="danger-icon">
+                        <FontAwesomeIcon icon={faExclamationTriangle} />
+                      </div>
+                      <Card.Title>{danger.name}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            {renderPagination()}
+            <Button variant="secondary" onClick={onBack}>
+              უკან
+            </Button>
+          </>
+        )}
       </Container>
     </div>
   );

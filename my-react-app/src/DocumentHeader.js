@@ -121,7 +121,7 @@ const DocumentHeader = ({
                 </div>
                 <div className="row document-header-buttons">
                   <div className="col">
-                  <Link to="/CompanyFiles" className='nav-link option'>
+                    <Link to="/CompanyFiles" className='nav-link option'>
                       <button type="button" className="btn btn-danger btn-block mt-4 w-100 py-2">
                         გაუქმება
                       </button>

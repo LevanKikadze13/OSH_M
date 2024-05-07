@@ -16,6 +16,10 @@ export function NewDocument() {
     setShowDangersDocument(true);
   };
 
+  const handleBack = () => {
+    setShowDangersDocument(false);
+  };
+
   return (
     <div>
       <ProfileHeader />
@@ -36,7 +40,11 @@ export function NewDocument() {
           onContinue={handleContinue}
         />
       ) : (
-        <DangersDocument name={name} fieldOfWork={fieldOfWork} />
+        <DangersDocument
+          name={name}
+          fieldOfWork={fieldOfWork}
+          onBack={handleBack}
+        />
       )}
     </div>
   );
