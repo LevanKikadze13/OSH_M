@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "migrate": "^2.1.0",
     "react-autosuggest": "^10.1.0"
   }
 }
