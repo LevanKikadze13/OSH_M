@@ -76,24 +76,27 @@ const DangersDocument = ({ name, fieldOfWork, onBack }) => {
           />
         ) : (
           <>
-            <Row className='d-flex justify-content-between border-bottom'>
-              <h2 className="text-center mb-4">აირჩიეთ საფთხე</h2>
-              <div className="search-container d-flex align-items-center">
-                <div className='me-4'>საფრთხეების გაფილტვრა:</div>
-                <Form.Group controlId="searchTerm w-50">
-                  <div className="search-input">
-                    <Form.Control
-                      id="filter-dangers"
-                      type="text"
-                      placeholder="მოძებნეთ საფრთხე..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    <FontAwesomeIcon icon={faSearch} className="search-icon" />
-                  </div>
-                </Form.Group>
-              </div>
-            </Row>
+            {/* Render the profile header only once */}
+            {!selectedDanger && (
+              <Row className='d-flex justify-content-between border-bottom'>
+                <h2 className="text-center mb-4">აირჩიეთ საფთხე</h2>
+                <div className="search-container d-flex align-items-center">
+                  <div className='me-4'>საფრთხეების გაფილტვრა:</div>
+                  <Form.Group controlId="searchTerm w-50">
+                    <div className="search-input">
+                      <Form.Control
+                        id="filter-dangers"
+                        type="text"
+                        placeholder="მოძებნეთ საფრთხე..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                      <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                    </div>
+                  </Form.Group>
+                </div>
+              </Row>
+            )}
             <Row className="justify-content-center mt-4">
               {currentDangers.map((danger) => (
                 <Col lg={4} md={6} sm={12} key={danger.id} className="mb-4">

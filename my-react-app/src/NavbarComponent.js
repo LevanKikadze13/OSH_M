@@ -33,7 +33,7 @@ const AppNavbar = () => {
                             <Nav className="justify-content-between flex-grow-1 pe-3 menu-items" >
                                 <br></br>
                                 <div className='options'>
-                                    <Nav.Link className='nav-item option' href="#">Option 1</Nav.Link>
+                                    <Nav.Link as={Link} to="/Contact" className='nav-item option' >დაგვიკავშირდით</Nav.Link>
                                     <NavDropdown className='nav-item option' title="Option2" id="offcanvas-dropdown" >
                                         <NavDropdown.Item className='dropdown-child' href="#">Dropdown Item 1</NavDropdown.Item>
                                         <NavDropdown.Item className='dropdown-child' href="#">Dropdown Item 2</NavDropdown.Item>

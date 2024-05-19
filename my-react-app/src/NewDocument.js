@@ -1,7 +1,10 @@
+// NewDocument.js
 import React, { useState } from "react";
 import ProfileHeader from './ProfileHeader';
 import DocumentHeader from "./DocumentHeader";
 import DangersDocument from "./DangersDocument";
+import DangersTableOne from "./DangersTableOne";
+import DangersTableTwo from "./DangersTableTwo";
 
 export function NewDocument() {
   const [name, setName] = useState('');
@@ -10,20 +13,58 @@ export function NewDocument() {
   const [fieldOfWork, setFieldOfWork] = useState('');
   const [workDescription, setWorkDescription] = useState('');
   const [revisionDate, setRevisionDate] = useState('');
-  const [showDangersDocument, setShowDangersDocument] = useState(false);
+  const [selectedDanger, setSelectedDanger] = useState(null);
+  const [existingMechanisms, setExistingMechanisms] = useState([]);
+  const [additionalMechanisms, setAdditionalMechanisms] = useState([]);
 
   const handleContinue = () => {
-    setShowDangersDocument(true);
+    setSelectedDanger(null);
+    setExistingMechanisms([]);
+    setAdditionalMechanisms([]);
+  };
+
+  const handleDangerSelect = (danger) => {
+    setSelectedDanger(danger);
   };
 
   const handleBack = () => {
-    setShowDangersDocument(false);
+    setSelectedDanger(null);
+  };
+
+  const handleMechanismSelection = (mechanism, option) => {
+    if (option === 'yes') {
+      setExistingMechanisms((prevMechanisms) => [...prevMechanisms, mechanism]);
+      setAdditionalMechanisms((prevMechanisms) =>
+        prevMechanisms.filter((m) => m.id !== mechanism.id)
+      );
+    } else if (option === 'no') {
+      setAdditionalMechanisms((prevMechanisms) => [...prevMechanisms, mechanism]);
+      setExistingMechanisms((prevMechanisms) =>
+        prevMechanisms.filter((m) => m.id !== mechanism.id)
+      );
+    } else if (option === 'not-required') {
+      setExistingMechanisms((prevMechanisms) =>
+        prevMechanisms.filter((m) => m.id !== mechanism.id)
+      );
+      setAdditionalMechanisms((prevMechanisms) =>
+        prevMechanisms.filter((m) => m.id !== mechanism.id)
+      );
+    }
+  };
+
+  const handleRemoveMechanism = (mechanismId) => {
+    setExistingMechanisms((prevMechanisms) =>
+      prevMechanisms.filter((m) => m.id !== mechanismId)
+    );
+    setAdditionalMechanisms((prevMechanisms) =>
+      prevMechanisms.filter((m) => m.id !== mechanismId)
+    );
   };
 
   return (
     <div>
       <ProfileHeader />
-      {!showDangersDocument ? (
+      {!selectedDanger ? (
         <DocumentHeader
           name={name}
           setName={setName}
@@ -37,13 +78,31 @@ export function NewDocument() {
           setWorkDescription={setWorkDescription}
           revisionDate={revisionDate}
           setRevisionDate={setRevisionDate}
-          onContinue={handleContinue}
+          onContinue={() => setSelectedDanger({})}
+        />
+      ) : !existingMechanisms.length && !additionalMechanisms.length ? (
+        <DangersTableOne
+          danger={selectedDanger}
+          onContinue={() => setSelectedDanger({ ...selectedDanger, tableOne: true })}
+          onBack={handleBack}
         />
       ) : (
+        <DangersTableTwo
+          danger={selectedDanger}
+          existingMechanisms={existingMechanisms}
+          additionalMechanisms={additionalMechanisms}
+          onMechanismSelection={handleMechanismSelection}
+          onRemoveMechanism={handleRemoveMechanism}
+          onContinue={handleContinue}
+          onBack={() => setSelectedDanger({ ...selectedDanger, tableOne: true })}
+        />
+      )}
+      {selectedDanger && selectedDanger.tableOne && (
         <DangersDocument
           name={name}
           fieldOfWork={fieldOfWork}
-          onBack={handleBack}
+          onDangerSelect={handleDangerSelect}
+          onBack={() => setSelectedDanger(null)}
         />
       )}
     </div>

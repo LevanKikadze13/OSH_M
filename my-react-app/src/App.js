@@ -9,6 +9,7 @@ import Sidebar from './Sidebar'
 import MyCompanies from './MyCompanies';
 import CompanyFilesPage from './CompanyFilesPage';
 import { NewDocument } from './NewDocument';
+import ContactPage from './ContactPage';
 
 const ProtectedRoute = ({ children }) => {
 
@@ -58,6 +59,7 @@ function App() {
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
+          <Route exact path="/Contact" element={<ContactPage />} />
           <Route
             exact path="/my-organizations"
             element={

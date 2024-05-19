@@ -10,6 +10,7 @@ const categoryOrder = [
     'Isolating',
     'Administrative control',
     'Individual protection',
+    
 ];
 
 const DangersTable = ({ existingMechanisms, additionalMechanisms }) => {
