@@ -10,6 +10,7 @@ import MyCompanies from './MyCompanies';
 import CompanyFilesPage from './CompanyFilesPage';
 import { NewDocument } from './NewDocument';
 import ContactPage from './ContactPage';
+import DangerSummary from './DangerSummary';
 
 const ProtectedRoute = ({ children }) => {
 
@@ -89,6 +90,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <NewDocument />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact path='/DangerSummary'
+            element={
+              <ProtectedRoute>
+                <DangerSummary />
               </ProtectedRoute>
             }
           />

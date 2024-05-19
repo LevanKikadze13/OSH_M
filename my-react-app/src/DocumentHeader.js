@@ -22,6 +22,7 @@ const DocumentHeader = ({
   onContinue,
 }) => {
   const [fieldOfWorkError, setFieldOfWorkError] = useState('');
+  const [fileName, setFileName] = useState('');
 
   const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
@@ -65,7 +66,7 @@ const DocumentHeader = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFieldOfWork();
-    if (fieldOfWorkError === '') {
+    if (fieldOfWorkError === '' && fileName !== '') {
       onContinue();
     }
   };
@@ -85,6 +86,10 @@ const DocumentHeader = ({
               <h5 className="card-title text-center mb-4">დოკუმენტის შექმნა</h5>
               <p className="text-center">{getCurrentDate()}</p>
               <form onSubmit={handleSubmit}>
+                <div className="form-group mb-3">
+                  <label htmlFor="fileName" className="mb-1">დოკუმენტის სახელი:</label>
+                  <input type="text" className="form-control" id="fileName" value={fileName} onChange={e => setFileName(e.target.value)} required />
+                </div>
                 <div className="form-group mb-3">
                   <label htmlFor="name" className="mb-1">შემფასებლის(ების) სახელი და გვარი:</label>
                   <input type="text" className="form-control" id="name" value={name} onChange={e => setName(e.target.value)} required />
@@ -119,6 +124,7 @@ const DocumentHeader = ({
                   <label htmlFor="revisionDate" className="mb-1">გადახედვის სავარაუდო თარიღი:</label>
                   <input type="date" className="form-control" id="revisionDate" value={revisionDate} onChange={e => setRevisionDate(e.target.value)} required />
                 </div>
+
                 <div className="row document-header-buttons">
                   <div className="col">
                     <Link to="/CompanyFiles" className='nav-link option'>

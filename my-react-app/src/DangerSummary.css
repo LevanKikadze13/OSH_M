@@ -1,0 +1,17 @@
+.dangers-summary {
+    margin-top: 40px;
+  }
+  
+  .danger-image {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+  }
+  
+  .table td {
+    vertical-align: middle;
+  }
