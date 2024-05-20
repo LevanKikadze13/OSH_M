@@ -3,6 +3,7 @@ import Autosuggest from 'react-autosuggest';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import './DocumentHeader.css';
+import DangersDocument from './DangersDocument';
 
 const fieldOfWorkOptions = ['Construction', 'School', 'Retail', 'Healthcare', 'Manufacturing', 'Technology', 'Finance'];
 
@@ -19,10 +20,10 @@ const DocumentHeader = ({
   setWorkDescription,
   revisionDate,
   setRevisionDate,
-  onContinue,
 }) => {
   const [fieldOfWorkError, setFieldOfWorkError] = useState('');
   const [fileName, setFileName] = useState('');
+  const [showDangersDocument, setShowDangersDocument] = useState(false);
 
   const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
@@ -67,7 +68,7 @@ const DocumentHeader = ({
     e.preventDefault();
     validateFieldOfWork();
     if (fieldOfWorkError === '' && fileName !== '') {
-      onContinue();
+      setShowDangersDocument(true);
     }
   };
 
@@ -76,6 +77,16 @@ const DocumentHeader = ({
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return today.toLocaleDateString('en-US', options);
   };
+
+  if (showDangersDocument) {
+    return (
+      <DangersDocument
+        name={name}
+        fieldOfWork={fieldOfWork}
+        onBack={() => setShowDangersDocument(false)}
+      />
+    );
+  }
 
   return (
     <div className="container-fluid">
@@ -124,7 +135,6 @@ const DocumentHeader = ({
                   <label htmlFor="revisionDate" className="mb-1">გადახედვის სავარაუდო თარიღი:</label>
                   <input type="date" className="form-control" id="revisionDate" value={revisionDate} onChange={e => setRevisionDate(e.target.value)} required />
                 </div>
-
                 <div className="row document-header-buttons">
                   <div className="col">
                     <Link to="/CompanyFiles" className='nav-link option'>

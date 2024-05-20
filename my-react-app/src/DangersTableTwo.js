@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import DangersTable from './DangersTable';
 import { useNavigate } from 'react-router-dom';
+import DangersTable from './DangersTable';
 import ControlMechanisms from './ControlMechanisms';
 import './DangersTableTwo.css';
 import DangersDocument from './DangersDocument';
@@ -10,6 +10,7 @@ const DangersTableTwo = ({ danger }) => {
   const [existingMechanisms, setExistingMechanisms] = useState([]);
   const [additionalMechanisms, setAdditionalMechanisms] = useState([]);
   const [showDangersDocument, setShowDangersDocument] = useState(false);
+  const navigate = useNavigate();
 
   const handleMechanismSelection = (mechanism, option) => {
     if (option === 'yes') {
@@ -45,8 +46,12 @@ const DangersTableTwo = ({ danger }) => {
     setShowDangersDocument(true);
   };
 
-  const handleBackToDangersTable = () => {
-    setShowDangersDocument(false);
+  const handleBackToDangers = () => {
+    navigate(-1);
+  };
+
+  const handleFinish = () => {
+    navigate('/companyfiles');
   };
 
   if (showDangersDocument) {
@@ -54,7 +59,7 @@ const DangersTableTwo = ({ danger }) => {
       <DangersDocument
         name={danger.name}
         fieldOfWork={danger.fieldOfWork}
-        onBack={handleBackToDangersTable}
+        onBack={handleBackToDangers}
       />
     );
   }
@@ -75,10 +80,18 @@ const DangersTableTwo = ({ danger }) => {
             additionalMechanisms={additionalMechanisms}
             onRemoveMechanism={handleRemoveMechanism}
           />
-          <div className="text-center mt-4">
-            <Button variant="primary" size="lg" onClick={handleContinue}>
-              Continue and Choose Another Danger
+          <div className="d-flex justify-content-between mt-4">
+            <Button variant="secondary" size="lg" onClick={handleBackToDangers}>
+              Back to Dangers
             </Button>
+            <div>
+              <Button variant="primary" size="lg" onClick={handleContinue} className="me-2">
+                Continue and Choose Another Danger
+              </Button>
+              <Button variant="success" size="lg" onClick={handleFinish}>
+                Finish
+              </Button>
+            </div>
           </div>
         </Col>
       </Row>

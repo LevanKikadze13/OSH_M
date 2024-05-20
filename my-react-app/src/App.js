@@ -11,6 +11,7 @@ import CompanyFilesPage from './CompanyFilesPage';
 import { NewDocument } from './NewDocument';
 import ContactPage from './ContactPage';
 import DangerSummary from './DangerSummary';
+import DangerSummaryEdit from './DangerSummaryEdit';
 
 const ProtectedRoute = ({ children }) => {
 
@@ -98,6 +99,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <DangerSummary />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact path='/DangerSummaryEdit'
+            element={
+              <ProtectedRoute>
+                <DangerSummaryEdit />
               </ProtectedRoute>
             }
           />

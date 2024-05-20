@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faChevronDown, faChevronRight, faCopy, faEllipsisV, faFilter } from '@fortawesome/free-solid-svg-icons';
 import './CompanyFiles.css';
 
-const CompanyFiles = ({ data }) => {
+const CompanyFiles = ({ data, onCopyFile }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
@@ -146,15 +146,13 @@ const CompanyFiles = ({ data }) => {
                   </Link>
                 </Col>
                 <Col md={6} className="text-center mb-3">
-                  <Link to="/copy-file" className="card-link">
-                    <Card className="add-new-card">
-                      <Card.Body>
-                        <Card.Title>
-                          არსებული ფაილის კოპირება <FontAwesomeIcon className="ms-1 add-organization" icon={faCopy} />
-                        </Card.Title>
-                      </Card.Body>
-                    </Card>
-                  </Link>
+                  <Card className="add-new-card" onClick={() => onCopyFile(null)}>
+                    <Card.Body>
+                      <Card.Title>
+                        არსებული ფაილის კოპირება <FontAwesomeIcon className="ms-1 add-organization" icon={faCopy} />
+                      </Card.Title>
+                    </Card.Body>
+                  </Card>
                 </Col>
               </Row>
             )}

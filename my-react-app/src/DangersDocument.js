@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import './DangersDocument.css';
 import DangersTableOne from './DangersTableOne';
 
@@ -14,7 +15,7 @@ const Dangers = [
   { id: 6, name: 'Noise Pollution' },
   { id: 7, name: 'Poor Ventilation' },
   { id: 8, name: 'Ergonomic Issues' },
-  { id: 9, name: 'Lack of Safety Equipment' },
+  { id: 9, name: 'Lack of Safety Equipment' },  
   { id: 10, name: 'Inadequate Lighting' },
   { id: 11, name: 'Biological Hazards' },
   { id: 12, name: 'Stress and Fatigue' },
@@ -22,7 +23,8 @@ const Dangers = [
 
 const itemsPerPage = 12;
 
-const DangersDocument = ({ name, fieldOfWork, onBack }) => {
+const DangersDocument = ({ name, fieldOfWork }) => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDanger, setSelectedDanger] = useState(null);
@@ -46,6 +48,10 @@ const DangersDocument = ({ name, fieldOfWork, onBack }) => {
 
   const handleBackToDangers = () => {
     setSelectedDanger(null);
+  };
+
+  const handleBack = () => {
+    navigate(-1);
   };
 
   const renderPagination = () => {
@@ -112,7 +118,7 @@ const DangersDocument = ({ name, fieldOfWork, onBack }) => {
               ))}
             </Row>
             {renderPagination()}
-            <Button variant="secondary" onClick={onBack}>
+            <Button variant="secondary" onClick={handleBack}>
               უკან
             </Button>
           </>
